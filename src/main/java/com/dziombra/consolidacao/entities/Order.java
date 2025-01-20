@@ -15,6 +15,10 @@ public class Order {
     private Instant moment;
     private OrderStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
+
     public Order() {
     }
     
