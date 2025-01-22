@@ -1,0 +1,24 @@
+Montando um Crud
+
+1-Criar o projeto no SpringInitializr
+2-Ajustar o POM com a seguinte dependecy:
+
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version> <!--$NO-MVN-MAN-VER$ -->
+			</plugin>
+
+3-Entidades e Relacionamentos
+4-Seed da base de dados
+5-Service
+6-Controllers
+7-Repository
+8-DTO
+9-Exceções
+10-Validações
+11-Consults JPA e JPQL
+12-Segurança
+13-Autenticação
+14-Roles
+15-Implantação (Docker / Postgres)
