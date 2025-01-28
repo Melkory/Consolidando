@@ -28,6 +28,10 @@ public class ProductController {
         return service.findAll(pageable);
     }
 
+    public ProductDTO update (Long id) {
+
+    }
+
 
 
 }

@@ -4,7 +4,9 @@ import com.dziombra.consolidacao.entities.Category;
 import com.dziombra.consolidacao.entities.Product;
 import jakarta.persistence.Column;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ProductDTO {
@@ -14,6 +16,7 @@ public class ProductDTO {
     private String description;
     private Double price;
     private String imgUrl;
+    private List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO( Long id, String name, String description, Double price, String imgUrl ) {
         this.id = id;
@@ -29,6 +32,9 @@ public class ProductDTO {
         description = entity.getDescription();
         price = entity.getPrice();
         imgUrl = entity.getImgUrl();
+        for (Category cat : entity.getCategories()) {
+            categories.add(new CategoryDTO(cat));
+        }
     }
 
     public Long getId() {
@@ -51,4 +57,7 @@ public class ProductDTO {
         return imgUrl;
     }
 
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
 }
