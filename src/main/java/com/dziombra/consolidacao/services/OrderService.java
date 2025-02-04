@@ -14,7 +14,7 @@ public class OrderService {
     private OrderRepository repository;
 
     @Transactional(readOnly = true)
-    public OrderDTO findById (Long id) {
+    public OrderDTO findById ( Long id) {
         Order order = repository.findById(id).get();
         return new OrderDTO(order);
     }
