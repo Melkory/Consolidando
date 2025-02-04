@@ -12,11 +12,11 @@ public class OrderDTO {
     private Long id;
     private Instant moment;
     private OrderStatus status;
-    private User client;
+    private ClientDTO client;
     private PaymentDTO payment;
     private Set<OrderItemDTO> items = new HashSet<>();
 
-    public OrderDTO( Long id, Instant moment, OrderStatus status, User client, PaymentDTO payment, Set<OrderItemDTO> items ) {
+    public OrderDTO( Long id, Instant moment, OrderStatus status, ClientDTO client, PaymentDTO payment, Set<OrderItemDTO> items ) {
         this.id = id;
         this.moment = moment;
         this.status = status;
@@ -29,7 +29,7 @@ public class OrderDTO {
         id = entity.getId();
         moment = entity.getMoment();
         status = entity.getStatus();
-        client = new ClientDTO (entity.getClient());
+        this.client = new ClientDTO (entity.getClient());
         payment = (entity.getPayment() == null) ? null : new PaymentDTO(entity.getPayment());
         for (OrderItem item : entity.getItems()) {
             OrderItemDTO itemDTO = new OrderItemDTO(item);
@@ -61,11 +61,11 @@ public class OrderDTO {
         this.status = status;
     }
 
-    public User getClient() {
+    public ClientDTO getClient() {
         return client;
     }
 
-    public void setClient( User client ) {
+    public void setClient( ClientDTO client ) {
         this.client = client;
     }
 
