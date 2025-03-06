@@ -5,14 +5,12 @@ import com.dziombra.consolidacao.dto.ProductDTO;
 import com.dziombra.consolidacao.entities.Category;
 import com.dziombra.consolidacao.entities.Product;
 import com.dziombra.consolidacao.repositories.ProductRepository;
+import com.dziombra.consolidacao.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -48,8 +46,14 @@ public class ProductService {
         return new ProductDTO(entity);
     }
 
+    @Transactional
     public void delete (Long id) {
-        Product product = repository.findById(id).get();
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado!");
+        } else {
+            repository.findById(id).get();
+        }
+
     }
 
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
