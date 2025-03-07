@@ -5,9 +5,11 @@ import com.dziombra.consolidacao.dto.ProductDTO;
 import com.dziombra.consolidacao.entities.Category;
 import com.dziombra.consolidacao.entities.Product;
 import com.dziombra.consolidacao.repositories.ProductRepository;
+import com.dziombra.consolidacao.services.exceptions.DatabaseException;
 import com.dziombra.consolidacao.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,9 +59,12 @@ public class ProductService {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Recurso não encontrado!");
         } else {
-            repository.findById(id).get();
+            try {
+                repository.deleteById(id);
+            } catch (DataIntegrityViolationException e) {
+                throw new DatabaseException("Falha de integridade referencial!");
+            }
         }
-
     }
 
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
