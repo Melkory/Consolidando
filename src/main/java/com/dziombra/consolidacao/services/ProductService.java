@@ -6,6 +6,7 @@ import com.dziombra.consolidacao.entities.Category;
 import com.dziombra.consolidacao.entities.Product;
 import com.dziombra.consolidacao.repositories.ProductRepository;
 import com.dziombra.consolidacao.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,10 +33,15 @@ public class ProductService {
 
     @Transactional()
     public ProductDTO update (Long id, ProductDTO dto) {
-        Product entity = repository.getReferenceById(id);
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new ProductDTO(entity);
+        try {
+            Product entity = repository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new ProductDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado!");
+        }
+
     }
 
     @Transactional
